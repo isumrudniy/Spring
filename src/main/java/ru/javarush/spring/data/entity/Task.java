@@ -18,6 +18,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    private String header;
     private String description;
     private Status status;
 }

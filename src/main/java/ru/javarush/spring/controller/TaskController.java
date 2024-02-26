@@ -5,24 +5,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.javarush.spring.aop.annotation.Authorized;
 import ru.javarush.spring.data.dto.RestResponse;
+import ru.javarush.spring.service.TaskService;
+import ru.javarush.spring.util.mapper.TaskMapper;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/task")
 public class TaskController {
 
+    private final TaskMapper taskMapper;
+    private final TaskService taskService;
+
     @GetMapping
     @Authorized
     @ResponseStatus(HttpStatus.OK)
     public RestResponse findAll() {
-        return new RestResponse(null);
+        return new RestResponse(taskMapper.toDto(taskService.findAll()));
     }
 
     @GetMapping("/{id}")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
-    public RestResponse findById() {
-        return new RestResponse(null);
+    public RestResponse findById(@PathVariable String id) {
+        return new RestResponse(taskMapper.toDto(taskService.findById(id)));
     }
 
     @PostMapping

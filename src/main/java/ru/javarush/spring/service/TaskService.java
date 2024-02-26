@@ -10,6 +10,8 @@ public interface TaskService {
 
     List<Task> findAll();
 
+    Task findById(String id);
+
     Task delete(String id);
 
     Task update(Task task);

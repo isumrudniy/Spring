@@ -14,7 +14,7 @@ import ru.javarush.spring.exception.NotAuthorizedException;
 @Component
 @RequiredArgsConstructor
 public class AuthorizedAnnotationHandler {
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
     @Value("${security.auth.token}")
     private String authToken;

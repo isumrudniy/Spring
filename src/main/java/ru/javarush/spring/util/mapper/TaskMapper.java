@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import ru.javarush.spring.data.dto.TaskDto;
 import ru.javarush.spring.data.entity.Task;
+import ru.javarush.spring.data.entity.reference.Status;
 
 import java.util.List;
 
@@ -16,23 +17,25 @@ import java.util.List;
 @Data
 public class TaskMapper {
 
-    Task toEntity(@NotNull TaskDto taskDto) {
+    public Task toEntity(@NotNull TaskDto taskDto) {
         return Task.builder()
                 .id(taskDto.getId())
+                .header(taskDto.getHeader())
                 .description(taskDto.getDescription())
                 .status(taskDto.getStatus())
                 .build();
     }
 
-    TaskDto toDto(@NotNull Task task) {
+    public TaskDto toDto(@NotNull Task task) {
         return TaskDto.builder()
                 .id(task.getId())
+                .header(task.getHeader())
                 .description(task.getDescription())
                 .status(task.getStatus())
                 .build();
     }
 
-    List<TaskDto> toDto(List<Task> tasks) {
+    public List<TaskDto> toDto(List<Task> tasks) {
         return tasks.stream().map(this::toDto).toList();
     }
 
