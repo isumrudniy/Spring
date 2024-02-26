@@ -2,6 +2,8 @@ package ru.javarush.spring.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.javarush.spring.aop.annotation.Authorized;
 import ru.javarush.spring.data.dto.RestResponse;
@@ -16,28 +18,28 @@ public class TaskController {
     private final TaskMapper taskMapper;
     private final TaskService taskService;
 
-    @GetMapping
+    @GetMapping("/find")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
     public RestResponse findAll() {
         return new RestResponse(taskMapper.toDto(taskService.findAll()));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
     public RestResponse findById(@PathVariable String id) {
         return new RestResponse(taskMapper.toDto(taskService.findById(id)));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
     public RestResponse create() {
         return new RestResponse(null);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
     public RestResponse update() {
@@ -45,11 +47,18 @@ public class TaskController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
     public RestResponse delete() {
         return new RestResponse("Task delete");
     }
+
+    /**Template*/
+
+//    @GetMapping("/table")
+//    public String showTable() {
+//        return "task-table";
+//    }
 
 }
