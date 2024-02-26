@@ -7,7 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.javarush.spring.aop.annotation.Authorized;
 import ru.javarush.spring.data.dto.RestResponse;
+import ru.javarush.spring.data.dto.TaskCreationDto;
+import ru.javarush.spring.data.dto.TaskDto;
 import ru.javarush.spring.service.TaskService;
+import ru.javarush.spring.util.mapper.TaskCreationMapper;
 import ru.javarush.spring.util.mapper.TaskMapper;
 
 @RestController
@@ -17,6 +20,7 @@ public class TaskController {
 
     private final TaskMapper taskMapper;
     private final TaskService taskService;
+    private final TaskCreationMapper taskCreationMapper;
 
     @GetMapping("/find")
     @Authorized
@@ -35,22 +39,23 @@ public class TaskController {
     @PostMapping("/create")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
-    public RestResponse create() {
-        return new RestResponse(null);
+    public RestResponse create(TaskCreationDto taskCreationDto) {
+        return new RestResponse(taskMapper.toDto(taskService.save(taskCreationMapper.toEntity(taskCreationDto))));
     }
 
     @PutMapping("/update/{id}")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
-    public RestResponse update() {
-        return new RestResponse(null);
+    public RestResponse update(@PathVariable String id, TaskDto taskDto) {
+        return new RestResponse(taskMapper.toDto(taskService.update(id,taskMapper.toEntity(taskDto))));
     }
 
 
     @DeleteMapping("/delete/{id}")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
-    public RestResponse delete() {
+    public RestResponse delete(@PathVariable String id) {
+        taskService.delete(id);
         return new RestResponse("Task delete");
     }
 

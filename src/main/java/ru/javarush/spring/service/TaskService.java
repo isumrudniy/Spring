@@ -12,9 +12,9 @@ public interface TaskService {
 
     Task findById(String id);
 
-    Task delete(String id);
+    void delete(String id);
 
-    Task update(Task task);
+    Task update(String id, Task taskUpdate);
 
     Task save(Task task);
 
