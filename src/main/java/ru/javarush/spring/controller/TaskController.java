@@ -29,6 +29,13 @@ public class TaskController {
         return new RestResponse(taskMapper.toDto(taskService.findAll()));
     }
 
+    @GetMapping("/search")
+    @Authorized
+    @ResponseStatus(HttpStatus.OK)
+    public RestResponse search(@RequestParam int size, @RequestParam int page) {
+        return new RestResponse(taskMapper.toDto(taskService.findAllWithPagging(page, size)));
+    }
+
     @GetMapping("/find/{id}")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
@@ -39,15 +46,15 @@ public class TaskController {
     @PostMapping("/create")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
-    public RestResponse create(TaskCreationDto taskCreationDto) {
+    public RestResponse create(@RequestBody TaskCreationDto taskCreationDto) {
         return new RestResponse(taskMapper.toDto(taskService.save(taskCreationMapper.toEntity(taskCreationDto))));
     }
 
     @PutMapping("/update/{id}")
     @Authorized
     @ResponseStatus(HttpStatus.OK)
-    public RestResponse update(@PathVariable String id, TaskDto taskDto) {
-        return new RestResponse(taskMapper.toDto(taskService.update(id,taskMapper.toEntity(taskDto))));
+    public RestResponse update(@PathVariable String id, @RequestBody TaskDto taskDto) {
+        return new RestResponse(taskMapper.toDto(taskService.update(id, taskMapper.toEntity(taskDto))));
     }
 
 

@@ -10,6 +10,8 @@ public interface TaskService {
 
     List<Task> findAll();
 
+    List<Task> findAllWithPagging(int page, int size);
+
     Task findById(String id);
 
     void delete(String id);
